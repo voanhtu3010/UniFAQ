@@ -1,4 +1,4 @@
-/* ==== GLOBAL STYLES ==== */
+/* ==== GLOBAL ==== */
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +21,12 @@ a {
   color: inherit;
 }
 
+a:focus,
+button:focus {
+  outline: 3px solid #4f46e5;
+  outline-offset: 3px;
+}
+
 .btn {
   background-color: #4f46e5;
   color: #fff;
@@ -30,7 +36,8 @@ a {
   transition: background 0.3s;
 }
 
-.btn:hover {
+.btn:hover,
+.btn:focus {
   background-color: #4338ca;
 }
 
@@ -38,6 +45,8 @@ a {
 .header {
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 10;
 }
 
 .header__container {
@@ -47,6 +56,7 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .header__logo {
@@ -66,7 +76,18 @@ a {
   color: #444;
 }
 
-.header__link:hover {
+.header__link:hover,
+.header__link:focus {
+  color: #4f46e5;
+}
+
+/* Hamburger */
+.header__toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
   color: #4f46e5;
 }
 
@@ -136,11 +157,6 @@ a {
   transform: translateY(-5px);
 }
 
-.features__item-title {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
 /* ==== USAGE ==== */
 .usage {
   padding: 3rem 1rem;
@@ -194,14 +210,47 @@ a {
   color: #a5b4fc;
 }
 
-.footer__backtotop:hover {
+.footer__backtotop:hover,
+.footer__backtotop:focus {
   color: #c7d2fe;
 }
 
 /* ==== RESPONSIVE ==== */
 @media (max-width: 768px) {
-  .header__menu {
+  .header__toggle {
+    display: block;
+  }
+
+  .header__nav {
+    position: absolute;
+    top: 60px;
+    right: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: 180px;
     display: none;
+    flex-direction: column;
+  }
+
+  .header__nav.open {
+    display: flex;
+  }
+
+  .header__menu {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .header__link {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: #4f46e5;
+  }
+
+  .header__link:hover,
+  .header__link:focus {
+    background-color: #f3f4f6;
   }
 
   .hero__container {

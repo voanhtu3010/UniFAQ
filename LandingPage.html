@@ -11,13 +11,20 @@
   <header class="header">
     <div class="header__container">
       <div class="header__logo">UniFAQ</div>
-      <nav class="header__nav">
+
+      <!-- Hamburger toggle for mobile -->
+      <button class="header__toggle" aria-label="Toggle menu" aria-expanded="false">
+        ☰
+      </button>
+
+      <nav class="header__nav" id="mainNav">
         <ul class="header__menu">
           <li class="header__item"><a href="#features" class="header__link">Features</a></li>
           <li class="header__item"><a href="#usage" class="header__link">How It Works</a></li>
           <li class="header__item"><a href="#contact" class="header__link">Contact</a></li>
         </ul>
       </nav>
+
       <a href="#start" class="header__cta btn">Get Started</a>
     </div>
   </header>
@@ -84,5 +91,27 @@
       <a href="#" class="footer__backtotop">Back to top ↑</a>
     </div>
   </footer>
+
+  <!-- ==== JS for mobile menu ==== -->
+  <script>
+    const toggleBtn = document.querySelector('.header__toggle');
+    const nav = document.getElementById('mainNav');
+    const navLinks = nav.querySelectorAll('a');
+
+    toggleBtn.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      toggleBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Đóng menu sau khi chọn 1 link trên mobile
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (nav.classList.contains('open')) {
+          nav.classList.remove('open');
+          toggleBtn.setAttribute('aria-expanded', false);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
