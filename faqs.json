@@ -1,0 +1,14 @@
+[
+  {
+    "question": "How do I reset my student password?",
+    "answer": "Go to the portal settings and click 'Forgot Password'."
+  },
+  {
+    "question": "Where can I find my timetable?",
+    "answer": "You can find it under the 'Schedule' section of the student dashboard."
+  },
+  {
+    "question": "Is UniFAQ available on mobile?",
+    "answer": "Yes, UniFAQ is fully responsive and works on any device."
+  }
+]
