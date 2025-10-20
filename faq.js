@@ -1,5 +1,3 @@
-const faqContainer = document.getElementById('faq-container');
-
 function getFaqContainer() {
   return document.getElementById('faq-container');
 }
@@ -13,6 +11,7 @@ export function renderState(message) {
 export function renderFAQs(faqs) {
   const faqContainer = getFaqContainer();
   console.log(`[RENDER] Rendering ${faqs.length} FAQ(s)`);
+
   faqContainer.innerHTML = faqs.map((faq) => `
     <div class="faq__item">
       <div class="faq__question">
@@ -35,7 +34,6 @@ export function renderFAQs(faqs) {
 }
 
 export async function fetchFAQs() {
-  const faqContainer = getFaqContainer();
   console.log('[FETCH] Start fetching FAQs...');
   renderState('Loading...');
 
@@ -53,5 +51,6 @@ export async function fetchFAQs() {
 
 // Khởi chạy khi trang load
 document.addEventListener('DOMContentLoaded', () => {
-  fetchFAQs();
+    console.log('[INIT] Document loaded. Fetching FAQs...');
+    fetchFAQs();
 });
