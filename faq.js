@@ -1,15 +1,19 @@
 const faqContainer = document.getElementById('faq-container');
 
-// Hàm render trạng thái (Loading, Empty, Error)
-function renderState(message) {
+function getFaqContainer() {
+  return document.getElementById('faq-container');
+}
+
+export function renderState(message) {
+  const faqContainer = getFaqContainer();
   console.log(`[STATE] ${message}`);
   faqContainer.innerHTML = `<div class="faq__state">${message}</div>`;
 }
 
-// Hàm render danh sách FAQ với accordion
-function renderFAQs(faqs) {
+export function renderFAQs(faqs) {
+  const faqContainer = getFaqContainer();
   console.log(`[RENDER] Rendering ${faqs.length} FAQ(s)`);
-  faqContainer.innerHTML = faqs.map((faq, index) => `
+  faqContainer.innerHTML = faqs.map((faq) => `
     <div class="faq__item">
       <div class="faq__question">
         <span>${faq.question}</span>
@@ -19,55 +23,35 @@ function renderFAQs(faqs) {
     </div>
   `).join('');
 
-  // Thêm sự kiện click cho accordion
   const faqItems = faqContainer.querySelectorAll('.faq__item');
   faqItems.forEach((item, i) => {
     item.addEventListener('click', () => {
-      console.log(`[CLICK] FAQ item ${i + 1} clicked`);
-      // Đóng các item khác
-      faqItems.forEach((other, j) => {
-        if (other !== item) {
-          other.classList.remove('open');
-          console.log(`→ Closed item ${j + 1}`);
-        }
+      faqItems.forEach(other => {
+        if (other !== item) other.classList.remove('open');
       });
-      // Toggle item hiện tại
       item.classList.toggle('open');
-      console.log(`→ Toggled item ${i + 1} (${item.classList.contains('open') ? 'OPEN' : 'CLOSED'})`);
     });
   });
 }
 
-// Fetch dữ liệu từ faqs.json
-async function fetchFAQs() {
+export async function fetchFAQs() {
+  const faqContainer = getFaqContainer();
   console.log('[FETCH] Start fetching FAQs...');
-  renderState('Loading...'); // Trạng thái loading
+  renderState('Loading...');
 
   try {
     const res = await fetch('faqs.json');
-    console.log(`[FETCH] Response status: ${res.status}`);
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! Status: ${res.status}`);
-    }
-
+    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
     const data = await res.json();
-    console.log('[FETCH] Data received:', data);
-
-    if (data.length === 0) {
-      console.log('[FETCH] Data is empty');
-      renderState('No FAQs available.');
-    } else {
-      renderFAQs(data);
-    }
+    if (data.length === 0) renderState('No FAQs available.');
+    else renderFAQs(data);
   } catch (err) {
     console.error('[FETCH ERROR]', err);
     renderState('Error loading FAQs. Please try again later.');
   }
 }
 
-// Gọi khi trang load
+// Khởi chạy khi trang load
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('[INIT] Document loaded. Fetching FAQs...');
   fetchFAQs();
 });
